@@ -11,6 +11,7 @@ var Enemy = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    
 }
 
 
@@ -37,7 +38,9 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	if (gameOver != true) {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	}
 }
 // Now write your own player class
 // This class requires an update(), render() and
@@ -49,15 +52,39 @@ var Player = function(x, y) {
 	this.y = y;
 }
 
+var score = 0;
+var gameOver = false;
+
+
+
 Player.prototype.update = function(dt) {
-
-}
-
-Player.prototype.reset = function() {
-	if (this.y < 100) {
+	// Check if player makes it the water. If so, add 1 point to the score.
+	if (this.y < 20) {
 		this.x = 200;
 		this.y = 400;
+		score += 1;
+		// Randomly generate a new enemy bug after every 2 points earned. The randomY variable assigns the new bug to one of three paths.
+		if (score%2 ===0){
+			var diceRoll = Math.random();
+			if (diceRoll <= 0.33) {
+				randomY = 50;
+			}
+			else if (diceRoll > 0.33 && diceRoll < 0.66) {
+				randomY = 150;
+			}
+			else {
+				randomY = 240;
+			}	
+
+		    allEnemies.push(new Enemy(Math.floor((Math.random()*300)+1), randomY ,Math.floor((Math.random()*100)+1)));
+		    
+		}
 	}
+}
+
+
+Player.prototype.reset = function() {
+
 }
 
 Player.prototype.render = function() {
@@ -65,18 +92,20 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(key) {
-	if (key === "up") {
-		this.y -= 80;
-	}
-	if (key === "down") {
-		this.y += 80;
-	}
-	if (key === "left") {
-		this.x -= 100;
-	}
-	if (key === "right") {
-		this.x += 100;
-	}
+	if (gameOver === false) {
+	    if (key === "up" && this.y > 0) {
+		    this.y -= 80;
+	    }
+	    if (key === "down" && this.y<350) {
+		    this.y += 80;
+	    }
+	    if (key === "left" && this.x>80) {
+	    	this.x -= 100;
+	    }
+	    if (key === "right" && this.x < 350) {
+		    this.x += 100;
+	    }
+	}    
 }
 
 
@@ -93,11 +122,11 @@ allEnemies.push(enemy1);
 var enemy2 = new Enemy(0, 150, 150);
 allEnemies.push(enemy2);
 
-var enemy3 = new Enemy(0, 240, 125);
+var enemy3 = new Enemy(0, 240, 100);
 allEnemies.push(enemy3);
 
-var enemy4 = new Enemy(150, 240, 100);
-allEnemies.push(enemy4);
+//var enemy4 = new Enemy(150, 240, 100);
+//allEnemies.push(enemy4);
 
 
 var player = new Player(200, 400);
@@ -114,3 +143,23 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+var lives = 3;
+var checkCollisions = function() {
+	for (enemy in allEnemies) {
+		if (player.x < allEnemies[enemy].x + 50 &&
+			player.x + 50 > allEnemies[enemy].x &&
+			player.y < allEnemies[enemy].y + 80 &&
+			player.y + 60 > allEnemies[enemy].y) {
+			player.x =200;
+			player.y =400;
+			lives -= 1;
+		}
+	    if (lives <= 0) {
+		    gameOver = true;
+	    }	
+	}
+    
+}
+if (gameOver === true) {
+	document.getElementById("game-over").style.visibility="visible";
+}
