@@ -84,6 +84,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkTokenCollisions();
         scoreEl.innerHTML = "Score: " + score;
         livesEl.innerHTML = "Lives Remaining: " + lives;
     }
@@ -153,11 +154,17 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+
+        allTokens.forEach(function(token) {
+            token.render();
+        });
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
         player.render();
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -168,6 +175,7 @@ var Engine = (function(global) {
         document.getElementById("game-over").style.display="none";
         gameOver = false;
         allEnemies = [enemy1, enemy2, enemy3];
+        allTokens = [token1];
         score = 0;
         lives = 3;
         player.x = 200;
@@ -184,7 +192,13 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/gem-green.png'
+        'images/gem-green.png',
+        'images/gem-blue.png',
+        'images/gem-orange.png',
+        'images/Heart.png',
+        'images/Key.png',
+        'images/Rock.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 

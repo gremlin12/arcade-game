@@ -38,7 +38,7 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    if (gameOver != true) {
+    if (gameOver !== true) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
@@ -114,7 +114,21 @@ Player.prototype.handleInput = function(key) {
     }    
 }
 
+var Token = function(x, y) {
+    this.x = x;
+    this.y = y;
+    this.sprite = tokenChoices[Math.round(Math.random()*6)];
+}
 
+var tokenChoices = ["images/gem-green.png", "images/gem-orange.png", "images/gem-blue.png", "images/Rock.png", "images/Key.png", "images/Heart.png", "images/Star.png"]
+
+Token.prototype.render = function() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+var allTokens = [];
+var token1 = new Token(200, 20);
+allTokens.push(token1);
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -150,6 +164,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+
 var checkCollisions = function() {
     for (enemy in allEnemies) {
         if (player.x < allEnemies[enemy].x + 50 &&
@@ -173,4 +188,37 @@ var checkCollisions = function() {
     }         
 }
 
+var checkTokenCollisions = function() {
+    for (token in allTokens) {
+        if (player.x < allTokens[token].x + 50 &&
+            player.x + 50 > allTokens[token].x &&
+            player.y < allTokens[token].y + 80 &&
+            player.y + 60 > allTokens[token].y) {
+                if (allTokens[token].sprite === "images/gem-green.png" || 
+                    allTokens[token].sprite === "images/gem-blue.png" ||
+                    allTokens[token].sprite === "images/gem-orange.png") {
+                        score += 1;
+                }
+                if (allTokens[token].sprite === "images/Heart.png") {
+                    lives += 1;
+                }
+                if (allTokens[token].sprite === "images/Rock.png") {
+                    score += 1;
+                }
+                if (allTokens[token].sprite === "images/Key.png") {
+                    score += 5;
+                    allEnemies.splice(3,allEnemies.length-3);
+                }
+                if (allTokens[token].sprite === "images/Star.png") {
+                    score += 10;
+                }
+
+                allTokens.splice(token,1);
+                var tokenSound = new Audio("sounds/token.ogg");
+                tokenSound.play();
+                //allTokens.push(new Token(Math.floor((Math.random()*300)+1), Math.round(Math.random()*4*100)));
+                allTokens.push(new Token(Math.floor((Math.random()*260)+1), 20));
+        }
+    }
+}
 
