@@ -1,7 +1,9 @@
 body {
     text-align: center;
 }
+
+
 #game-over {
-	display: block;
-	visibility: hidden;
+	display: none;
 }
+

@@ -19,14 +19,14 @@ Enemy.prototype.reset = function() {
 
     }
 
-	//to take care of bug's speed and to ensure it is random as well as its starting position
+    //to take care of bug's speed and to ensure it is random as well as its starting position
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x += this.speed* Math.random() * 4 * dt;
     if (this.x > 550) {
-    	this.x = -50;
+        this.x = -50;
     }
 
 
@@ -38,48 +38,54 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-	if (gameOver != true) {
+    if (gameOver != true) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	}
+    }
 }
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 
 var Player = function(x, y) {
-	this.sprite = "images/char-boy.png";
-	this.x = x;
-	this.y = y;
+    this.sprite = "images/char-boy.png";
+    this.x = x;
+    this.y = y;
 }
 
 var score = 0;
+var scoreEl = document.getElementById("score");
+
+var lives = 3;
+var livesEl = document.getElementById("lives");
+
 var gameOver = false;
 
 
-
 Player.prototype.update = function(dt) {
-	// Check if player makes it the water. If so, add 1 point to the score.
-	if (this.y < 20) {
-		this.x = 200;
-		this.y = 400;
-		score += 1;
-		// Randomly generate a new enemy bug after every 2 points earned. The randomY variable assigns the new bug to one of three paths.
-		if (score%2 ===0){
-			var diceRoll = Math.random();
-			if (diceRoll <= 0.33) {
-				randomY = 50;
-			}
-			else if (diceRoll > 0.33 && diceRoll < 0.66) {
-				randomY = 150;
-			}
-			else {
-				randomY = 240;
-			}	
+    // Check if player makes it the water. If so, add 1 point to the score.
+    if (this.y < 20) {
+        var cheerSound = new Audio("sounds/woop.wav");
+        cheerSound.play();
+        this.x = 200;
+        this.y = 400;
+        score += 1;
+        // Randomly generate a new enemy bug after every 2 points earned. The randomY variable assigns the new bug to one of three paths.
+        if (score%2 ===0){
+            var diceRoll = Math.random();
+            if (diceRoll <= 0.33) {
+                randomY = 50;
+            }
+            else if (diceRoll > 0.33 && diceRoll < 0.66) {
+                randomY = 150;
+            }
+            else {
+                randomY = 240;
+            }   
 
-		    allEnemies.push(new Enemy(Math.floor((Math.random()*300)+1), randomY ,Math.floor((Math.random()*100)+1)));
-		    
-		}
-	}
+            allEnemies.push(new Enemy(Math.floor((Math.random()*300)+1), randomY ,Math.floor((Math.random()*100)+1)));
+            
+        }
+    }
 }
 
 
@@ -88,24 +94,24 @@ Player.prototype.reset = function() {
 }
 
 Player.prototype.render = function() {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 Player.prototype.handleInput = function(key) {
-	if (gameOver === false) {
-	    if (key === "up" && this.y > 0) {
-		    this.y -= 80;
-	    }
-	    if (key === "down" && this.y<350) {
-		    this.y += 80;
-	    }
-	    if (key === "left" && this.x>80) {
-	    	this.x -= 100;
-	    }
-	    if (key === "right" && this.x < 350) {
-		    this.x += 100;
-	    }
-	}    
+    if (gameOver === false) {
+        if (key === "up" && this.y > 0) {
+            this.y -= 80;
+        }
+        if (key === "down" && this.y<350) {
+            this.y += 80;
+        }
+        if (key === "left" && this.x>80) {
+            this.x -= 100;
+        }
+        if (key === "right" && this.x < 350) {
+            this.x += 100;
+        }
+    }    
 }
 
 
@@ -143,23 +149,28 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-var lives = 3;
+
 var checkCollisions = function() {
-	for (enemy in allEnemies) {
-		if (player.x < allEnemies[enemy].x + 50 &&
-			player.x + 50 > allEnemies[enemy].x &&
-			player.y < allEnemies[enemy].y + 80 &&
-			player.y + 60 > allEnemies[enemy].y) {
-			player.x =200;
-			player.y =400;
-			lives -= 1;
-		}
-	    if (lives <= 0) {
-		    gameOver = true;
-	    }	
-	}
+    for (enemy in allEnemies) {
+        if (player.x < allEnemies[enemy].x + 50 &&
+            player.x + 50 > allEnemies[enemy].x &&
+            player.y < allEnemies[enemy].y + 80 &&
+            player.y + 60 > allEnemies[enemy].y) {
+                var biteSound = new Audio("sounds/Bite.wav");
+                biteSound.play();
+                player.x =200;
+                player.y =400;
+                lives -= 1;
+        }
+    }
     
+    if (lives <= 0) {
+            gameOver = true;
+        }  
+
+    if (gameOver === true) {
+        document.getElementById("game-over").style.display="block";
+    }         
 }
-if (gameOver === true) {
-	document.getElementById("game-over").style.visibility="visible";
-}
+
+

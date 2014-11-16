@@ -63,7 +63,10 @@ var Engine = (function(global) {
      * particularly setting the lastTime variable that is required for the
      * game loop.
      */
-    function init() {
+    function init() { 
+        document.getElementById("play-again").addEventListener("click", function() {
+            reset();
+        });      
         reset();
         lastTime = Date.now();
         main();
@@ -81,6 +84,8 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        scoreEl.innerHTML = "Score: " + score;
+        livesEl.innerHTML = "Lives Remaining: " + lives;
     }
 
     /* This is called by the update function  and loops through all of the
@@ -160,7 +165,13 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        document.getElementById("game-over").style.display="none";
+        gameOver = false;
+        allEnemies = [enemy1, enemy2, enemy3];
+        score = 0;
+        lives = 3;
+        player.x = 200;
+        player.y = 380;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -172,7 +183,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/gem-green.png'
     ]);
     Resources.onReady(init);
 
