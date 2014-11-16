@@ -64,7 +64,7 @@ var gameOver = false;
 Player.prototype.update = function(dt) {
     // Check if player makes it the water. If so, add 1 point to the score.
     if (this.y < 20) {
-        var cheerSound = new Audio("sounds/woop.wav");
+        var cheerSound = new Audio("sounds/jingle.ogg");
         cheerSound.play();
         this.x = 200;
         this.y = 400;
