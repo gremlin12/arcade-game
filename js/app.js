@@ -15,10 +15,6 @@ var Enemy = function(x, y, speed) {
 }
 
 
-Enemy.prototype.reset = function() {
-
-    }
-
     //to take care of bug's speed and to ensure it is random as well as its starting position
 
 // Update the enemy's position, required method for game
@@ -58,8 +54,42 @@ var scoreEl = document.getElementById("score");
 var lives = 3;
 var livesEl = document.getElementById("lives");
 
+var level = 1;
+var levelEl = document.getElementById("level");
+
 var gameOver = false;
 
+var randomY = function () {
+    var diceRoll = Math.random();
+    if (diceRoll <= 0.33) {
+        return 50;
+    }
+    else if (diceRoll > 0.33 && diceRoll < 0.66) {
+        return 150;
+    }
+    else {
+        return 240;
+    }   
+}
+
+var randomX = function() {
+    var diceRoll = Math.random();
+    if (diceRoll <= 0.20) {
+        return 0;
+    }
+    else if (diceRoll > 0.20 && diceRoll <= 0.40) {
+        return 101;
+    }
+    else if (diceRoll > 0.40 && diceRoll <= 0.60) {
+        return 202;
+    }
+    else if (diceRoll > 0.60 && diceRoll <= 0.80) {
+        return 303;
+    }
+    else {
+        return 403;
+    }
+}
 
 Player.prototype.update = function(dt) {
     // Check if player makes it the water. If so, add 1 point to the score.
@@ -70,27 +100,11 @@ Player.prototype.update = function(dt) {
         this.y = 400;
         score += 1;
         // Randomly generate a new enemy bug after every 2 points earned. The randomY variable assigns the new bug to one of three paths.
-        if (score%2 ===0){
-            var diceRoll = Math.random();
-            if (diceRoll <= 0.33) {
-                randomY = 50;
-            }
-            else if (diceRoll > 0.33 && diceRoll < 0.66) {
-                randomY = 150;
-            }
-            else {
-                randomY = 240;
-            }   
-
-            allEnemies.push(new Enemy(Math.floor((Math.random()*300)+1), randomY ,Math.floor((Math.random()*100)+1)));
-            
-        }
+        if (score > 0 && score%5 === 0){
+            allEnemies.push(new Enemy(randomX(), randomY(), Math.floor((Math.random()*100)+1)));
+            level += 1;
+        }    
     }
-}
-
-
-Player.prototype.reset = function() {
-
 }
 
 Player.prototype.render = function() {
@@ -197,7 +211,7 @@ var checkTokenCollisions = function() {
                 if (allTokens[token].sprite === "images/gem-green.png" || 
                     allTokens[token].sprite === "images/gem-blue.png" ||
                     allTokens[token].sprite === "images/gem-orange.png") {
-                        score += 1;
+                        score += 2;
                 }
                 if (allTokens[token].sprite === "images/Heart.png") {
                     lives += 1;
@@ -206,19 +220,22 @@ var checkTokenCollisions = function() {
                     score += 1;
                 }
                 if (allTokens[token].sprite === "images/Key.png") {
-                    score += 5;
-                    allEnemies.splice(3,allEnemies.length-3);
+                    if (allEnemies.length > level + 2) {
+                        allEnemies.pop();
+                    }
+                    score +=5;
                 }
                 if (allTokens[token].sprite === "images/Star.png") {
                     score += 10;
                 }
 
                 allTokens.splice(token,1);
-                var tokenSound = new Audio("sounds/token.ogg");
+                var tokenSound = new Audio("sounds/blip.ogg");
                 tokenSound.play();
+
                 //allTokens.push(new Token(Math.floor((Math.random()*300)+1), Math.round(Math.random()*4*100)));
-                allTokens.push(new Token(Math.floor((Math.random()*260)+1), 20));
+                allTokens.push(new Token(randomX(), randomY() ) );
         }
+
     }
 }
-

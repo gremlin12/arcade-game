@@ -81,12 +81,14 @@ var Engine = (function(global) {
      * functionality this way (you could just implement collision detection
      * on the entities themselves within your app.js file).
      */
+
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
         checkTokenCollisions();
         scoreEl.innerHTML = "Score: " + score;
         livesEl.innerHTML = "Lives Remaining: " + lives;
+        levelEl.innerHTML = "Skill Level: " + level;
     }
 
     /* This is called by the update function  and loops through all of the
