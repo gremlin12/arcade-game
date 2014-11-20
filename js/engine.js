@@ -26,8 +26,11 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 505;
-    canvas.height = 606;
-    doc.body.appendChild(canvas);
+    canvas.height = 555;
+    doc.getElementById("gameArea").appendChild(canvas);
+    canvas.setAttribute("id", "gameCanvas");
+
+
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -63,7 +66,7 @@ var Engine = (function(global) {
      * particularly setting the lastTime variable that is required for the
      * game loop.
      */
-    function init() { 
+    function init() {
         document.getElementById("play-again").addEventListener("click", function() {
             reset();
         });      
@@ -87,7 +90,7 @@ var Engine = (function(global) {
         checkCollisions();
         checkTokenCollisions();
         scoreEl.innerHTML = "Score: " + score;
-        livesEl.innerHTML = "Lives Remaining: " + lives;
+        livesEl.innerHTML = "Lives: " + lives;
         levelEl.innerHTML = "Skill Level: " + level;
     }
 

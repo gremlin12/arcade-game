@@ -198,9 +198,10 @@ var checkCollisions = function() {
         }  
 
     if (gameOver === true) {
-        document.getElementById("game-over").style.display="block";
+        document.getElementById("game-over").style.display="block"; 
     }         
 }
+
 
 var checkTokenCollisions = function() {
     for (token in allTokens) {
@@ -238,4 +239,36 @@ var checkTokenCollisions = function() {
         }
 
     }
+}
+
+function resizeGame() {
+    var gameArea = document.getElementById("gameArea");
+    var widthToHeight = 5 / 6;
+    var newWidth = window.innerWidth;
+    var newHeight = window.innerHeight;
+    var newWidthToHeight = newWidth / newHeight;
+
+    if (newWidthToHeight > widthToHeight) {
+        // check if window width is too wide relative game width
+        newWidth = newHeight * widthToHeight;
+        gameArea.style.height = newHeight + 'px';
+        gameArea.style.width = newWidth + 'px';
+    } else {  // check if windown height is too high relative to game width
+        newHeight = newWidth / widthToHeight;
+        gameArea.style.width = newWidth + 'px';
+        gameArea.style.height = newHeight + 'px';
+    }
+
+    gameArea.style.marginTop = (-newHeight / 2) + 'px';
+    gameArea.style.marginLeft = (-newWidth / 2) + 'px';
+    gameArea.style.fontSize = (newWidth / 500) + 'em';
+
+    var gameCanvas = document.getElementById('gameCanvas');
+    gameCanvas.width = newWidth;
+    gameCanvas.height = newHeight;
+}
+
+function overlay() {
+    el = document.getElementById("overlay");
+    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
 }

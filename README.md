@@ -12,3 +12,12 @@ Bite sound from soundbible.com :
 Success sound by plasterbrain:
 http://www.freesound.org/people/plasterbrain/packs/14554/
 
+
+modal
+http://blog.raventools.com/create-a-modal-dialog-using-css-and-javascript/
+
+canvas resizing
+http://www.html5rocks.com/en/tutorials/casestudies/gopherwoord-studios-resizing-html5-games/
+
+game
+http://jlongster.com/Making-Sprite-based-Games-with-Canvas
