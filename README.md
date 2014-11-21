@@ -1,23 +1,38 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+REVENGE OF THE MUTANT LADYBUGS
 
-for self-checking their submission.
+Giant ladybugs, mutated and energized by radioactive crystals, 
+have overrun the city. Only You Can Save Us!
 
-Sound effects 
+To play the game, follow these steps:
 
-Bite sound from soundbible.com : 
+1. Open the index.html file in a browser
+2. Click on the "How to Play" link for instructions
+3. Have fun!
 
-Success sound by plasterbrain:
+
+This game was created as a project for Udacity's Frontend Web-Developer Nanodegree.
+The game engine and basic framework are contained in engine.js and resources.js and 
+were provided by Udacity instructors. The rest, including app.js, is mostly my own work,
+with a lot of help from my friends.
+
+The ladybug "bite" sound is by Mike Koenig at http://soundbible.com/950-Bite.html
+The "blip" and "jingle" sound effects are by plasterbrain. You can find them at
 http://www.freesound.org/people/plasterbrain/packs/14554/
 
-
-modal
+I am grateful to Jon Henshaw for his excellent tutorial on how to build a
+modal with Javascript and CSS. 
 http://blog.raventools.com/create-a-modal-dialog-using-css-and-javascript/
 
-canvas resizing
+I also relied heavily on James Long's tutorial, "Making Sprite-based Games
+with Canvas," at http://jlongster.com/Making-Sprite-based-Games-with-Canvas
+
+Thanks also to Derek Detweiler for help with canvas resizing:
 http://www.html5rocks.com/en/tutorials/casestudies/gopherwoord-studios-resizing-html5-games/
 
-game
-http://jlongster.com/Making-Sprite-based-Games-with-Canvas
+Mark Pilgrim's online ebook "Dive Into HTML5" was an indispensible resource. Find his
+chapter on canvas drawing here: http://diveintohtml5.info/canvas.html
+
+And many thanks to the Udacity instructors for their patience and support!

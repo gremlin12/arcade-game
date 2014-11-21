@@ -177,12 +177,13 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        document.getElementById("game-over").style.display="none";
+        document.getElementById("game-over").style.visibility="hidden";
         gameOver = false;
         allEnemies = [enemy1, enemy2, enemy3];
         allTokens = [token1];
         score = 0;
         lives = 3;
+        level = 1;
         player.x = 200;
         player.y = 380;
     }

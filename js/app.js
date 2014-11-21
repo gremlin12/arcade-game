@@ -1,63 +1,41 @@
-// Enemies our player must avoid
+/* App.js 
+* This file sets up classes for Enemy, Player, and Token, and then
+* constructs instances of these classes to be used in the game. 
+* App.js also takes care of some basic game procedures such as score-
+* keeping, setting the locations where objects will be rendered
+* on canvas, and determining how and when the game ends. 
+*/
 
+/* General Game Keeping
+* Here we define some game-keeping variables that will be used in 
+* various functions. These need to be defined in the global scope. 
+*/
 
-var Enemy = function(x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = "images/enemy-bug.png";
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-    
-}
-
-
-    //to take care of bug's speed and to ensure it is random as well as its starting position
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    this.x += this.speed* Math.random() * 4 * dt;
-    if (this.x > 550) {
-        this.x = -50;
-    }
-
-
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    
-}
-
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    if (gameOver !== true) {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    }
-}
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
-var Player = function(x, y) {
-    this.sprite = "images/char-boy.png";
-    this.x = x;
-    this.y = y;
-}
-
+// The score is set at 0 and stored in a variable.
 var score = 0;
+// The scoreEl variable is used in engine.js to place the score in DOM.
 var scoreEl = document.getElementById("score");
 
+// The "lives" variable keeps track of how many lives the player has left.
 var lives = 3;
 var livesEl = document.getElementById("lives");
 
+// The "level" variable keeps track of Skill Level. It increases by 1
+// when the player reaches the water (but only if the score is a multiple
+// of 5). As a side effect, the number of enemies also increases by 1.
 var level = 1;
 var levelEl = document.getElementById("level");
 
+// If the endGame() function is called, the value of "gaveOver" will change
+// to true, stopping all player and enemy movements.
 var gameOver = false;
+
+/* RandomY() and randomX()
+*  These functions generate values of x and y which can be
+*  used in other functions to render entities randomly within
+*  predetermined boundaries. This helps in centering sprites on the
+*  game tiles.
+*/
 
 var randomY = function () {
     var diceRoll = Math.random();
@@ -70,7 +48,7 @@ var randomY = function () {
     else {
         return 240;
     }   
-}
+};
 
 var randomX = function() {
     var diceRoll = Math.random();
@@ -89,7 +67,69 @@ var randomX = function() {
     else {
         return 403;
     }
-}
+};
+
+/* Class Enemy
+*  Here we create the class Enemy, which will be used to construct
+*  all the enemy objects which the player will have to avoid. The
+*  function uses the keyword "this" to apply variables to each
+*  instance of Enemy.
+*/
+
+var Enemy = function(x, y, speed) {
+    // Variables applied to each of our instances go here.
+
+    // The image/sprite for our enemies uses
+    // a helper we've provided to easily load images
+    this.sprite = "images/enemy-bug.png";
+    this.x = x;
+    this.y = y;
+    this.speed = speed;   
+};
+
+/* Here we add a method to the Enemy prototype  to update the
+*  enemy's position after each tick of the game engine.  The update() 
+*  method also sets a random speed and starting position for each 
+*  enemy object. 
+*/
+
+// Parameter: dt, a time delta between ticks
+Enemy.prototype.update = function(dt) {
+    this.x += this.speed* Math.random() * 4 * dt;
+    if (this.x > 550) {
+        this.x = -50;
+    }
+    // You should multiply any movement by the dt parameter
+    // which will ensure the game runs at the same speed for
+    // all computers.   
+};
+
+// Draw the enemy on the canvas (required method for game).
+Enemy.prototype.render = function() {
+    if (gameOver !== true) {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+};
+
+/* Class Player
+*  The Player class sets up a template for all instances of player.
+*  The class requires an update(), render() and handleInput() method.
+*/
+
+var Player = function(x, y) {
+    this.sprite = "images/char-boy.png";
+    this.x = x;
+    this.y = y;
+};
+
+/* The player.prototype.update() method checks the location of the player
+*  and causes certain events to happen in response. If the player's
+*  y position is less than 20 pixels, it means he has safely made it across 
+*  the road to the water. In this case, a cheer sound is triggered and the 
+*  player is returned to his starting position. The score goes up 1 point.
+*  If the score is a multiple of 5, a new enemy bug is generated and the 
+*  Skill Level increases by 1. 
+*/
 
 Player.prototype.update = function(dt) {
     // Check if player makes it the water. If so, add 1 point to the score.
@@ -99,18 +139,21 @@ Player.prototype.update = function(dt) {
         this.x = 200;
         this.y = 400;
         score += 1;
-        // Randomly generate a new enemy bug after every 2 points earned. The randomY variable assigns the new bug to one of three paths.
+        // Randomly generate a new enemy bug if score is a multiple of 5. 
+        // The randomY variable assigns the new bug to one of three paths.
         if (score > 0 && score%5 === 0){
             allEnemies.push(new Enemy(randomX(), randomY(), Math.floor((Math.random()*100)+1)));
             level += 1;
         }    
     }
-}
+};
 
+// Render the player on canvas
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
+// Assign keys to player movements
 Player.prototype.handleInput = function(key) {
     if (gameOver === false) {
         if (key === "up" && this.y > 0) {
@@ -126,28 +169,37 @@ Player.prototype.handleInput = function(key) {
             this.x += 100;
         }
     }    
-}
+};
+
+/* Class Token
+*  The Token class creates a template for all tokens used in the game.
+*  A sprite image is randomly selected from the tokenChoices array. The
+*  Token class also requires a render() method, just as the Player
+*  and Enemy classes do.
+*/
 
 var Token = function(x, y) {
     this.x = x;
     this.y = y;
+    // Randomly select a sprite image from the tokenChoices array
     this.sprite = tokenChoices[Math.round(Math.random()*6)];
-}
+};
 
-var tokenChoices = ["images/gem-green.png", "images/gem-orange.png", "images/gem-blue.png", "images/Rock.png", "images/Key.png", "images/Heart.png", "images/Star.png"]
+var tokenChoices = ["images/gem-green.png", "images/gem-orange.png", "images/gem-blue.png", 
+    "images/Rock.png", "images/Key.png", "images/Heart.png", "images/Star.png"];
 
+//  Render the token on canvas
 Token.prototype.render = function() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
-var allTokens = [];
-var token1 = new Token(200, 20);
-allTokens.push(token1);
+/* Now we instantiate our objects.
+*  Enemy, player, and token objects are constructed using their 
+*  respective Class objects as templates. The newly created enemies
+*  and tokens are stored in arrays for easy access.
+*/
 
-// Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
 var allEnemies = [];
 
 var enemy1 = new Enemy(0, 50, 100);
@@ -159,14 +211,17 @@ allEnemies.push(enemy2);
 var enemy3 = new Enemy(0, 240, 100);
 allEnemies.push(enemy3);
 
-//var enemy4 = new Enemy(150, 240, 100);
-//allEnemies.push(enemy4);
 
-
+// Place the player object in a variable called player
 var player = new Player(200, 400);
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Place the token in an allTokens array
+var allTokens = [];
+var token1 = new Token(200, 20);
+allTokens.push(token1);
+
+// This listens for key presses and sends the keys to our
+// Player.handleInput() method. 
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -178,13 +233,23 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+/* checkCollisions()
+*  This function checks for enemy-player collisions after each
+*  tick of the game engine. It loops through the allEnemies array
+*  and compares each enemy's position to the player's position at
+*  a specific point in time. If a match is found, it means that
+*  a collision has occurred. A bite sound is triggered, the Lives
+*  count decreases by 1, and the player is returned to his
+*  starting position. If the Lives count hits zero, the endGame()
+*  function is called to end the game.
+*/
 
 var checkCollisions = function() {
-    for (enemy in allEnemies) {
-        if (player.x < allEnemies[enemy].x + 50 &&
-            player.x + 50 > allEnemies[enemy].x &&
-            player.y < allEnemies[enemy].y + 80 &&
-            player.y + 60 > allEnemies[enemy].y) {
+    for (var i = 0; i < allEnemies.length; i++) {
+        if (player.x < allEnemies[i].x + 50 &&
+            player.x + 50 > allEnemies[i].x &&
+            player.y < allEnemies[i].y + 80 &&
+            player.y + 60 > allEnemies[i].y) {
                 var biteSound = new Audio("sounds/Bite.wav");
                 biteSound.play();
                 player.x =200;
@@ -194,81 +259,66 @@ var checkCollisions = function() {
     }
     
     if (lives <= 0) {
-            gameOver = true;
-        }  
+            endGame();
+        }       
+};
 
-    if (gameOver === true) {
-        document.getElementById("game-over").style.display="block"; 
-    }         
-}
-
+/* checkTokenCollisions()
+*  This function works much the same as checkCollisions(), but checking
+*  for player-token collisions instead. Different events are triggered
+*  depending on which token type is involved. In all cases,
+*  the collision triggers a blip sound. Hearts increase the Lives count
+*  by 1. Keys remove one enemy from the game by popping one element from
+*  the allEnemies array if certain conditions are met. Other tokens add 
+*  points to the score.
+*/
 
 var checkTokenCollisions = function() {
-    for (token in allTokens) {
-        if (player.x < allTokens[token].x + 50 &&
-            player.x + 50 > allTokens[token].x &&
-            player.y < allTokens[token].y + 80 &&
-            player.y + 60 > allTokens[token].y) {
-                if (allTokens[token].sprite === "images/gem-green.png" || 
-                    allTokens[token].sprite === "images/gem-blue.png" ||
-                    allTokens[token].sprite === "images/gem-orange.png") {
+    for (var i = 0; i < allTokens.length; i++) {
+        if (player.x < allTokens[i].x + 50 &&
+            player.x + 50 > allTokens[i].x &&
+            player.y < allTokens[i].y + 80 &&
+            player.y + 60 > allTokens[i].y) {
+                if (allTokens[i].sprite === "images/gem-green.png" || 
+                    allTokens[i].sprite === "images/gem-blue.png" ||
+                    allTokens[i].sprite === "images/gem-orange.png") {
                         score += 2;
                 }
-                if (allTokens[token].sprite === "images/Heart.png") {
+                if (allTokens[i].sprite === "images/Heart.png") {
                     lives += 1;
                 }
-                if (allTokens[token].sprite === "images/Rock.png") {
+                if (allTokens[i].sprite === "images/Rock.png") {
                     score += 1;
                 }
-                if (allTokens[token].sprite === "images/Key.png") {
-                    if (allEnemies.length > level + 2) {
+                if (allTokens[i].sprite === "images/Key.png") {
+                    if (allEnemies.length > 3 && allEnemies.length >= level) {
                         allEnemies.pop();
                     }
                     score +=5;
                 }
-                if (allTokens[token].sprite === "images/Star.png") {
+                if (allTokens[i].sprite === "images/Star.png") {
                     score += 10;
                 }
-
-                allTokens.splice(token,1);
+                // Empty the allTokens array to make the token disappear from canvas.
+                allTokens.splice(i,1);
                 var tokenSound = new Audio("sounds/blip.ogg");
                 tokenSound.play();
-
-                //allTokens.push(new Token(Math.floor((Math.random()*300)+1), Math.round(Math.random()*4*100)));
+                // Add a new token to the allTokens array to render it randomly on the canvas. 
                 allTokens.push(new Token(randomX(), randomY() ) );
         }
 
     }
-}
+};
 
-function resizeGame() {
-    var gameArea = document.getElementById("gameArea");
-    var widthToHeight = 5 / 6;
-    var newWidth = window.innerWidth;
-    var newHeight = window.innerHeight;
-    var newWidthToHeight = newWidth / newHeight;
-
-    if (newWidthToHeight > widthToHeight) {
-        // check if window width is too wide relative game width
-        newWidth = newHeight * widthToHeight;
-        gameArea.style.height = newHeight + 'px';
-        gameArea.style.width = newWidth + 'px';
-    } else {  // check if windown height is too high relative to game width
-        newHeight = newWidth / widthToHeight;
-        gameArea.style.width = newWidth + 'px';
-        gameArea.style.height = newHeight + 'px';
-    }
-
-    gameArea.style.marginTop = (-newHeight / 2) + 'px';
-    gameArea.style.marginLeft = (-newWidth / 2) + 'px';
-    gameArea.style.fontSize = (newWidth / 500) + 'em';
-
-    var gameCanvas = document.getElementById('gameCanvas');
-    gameCanvas.width = newWidth;
-    gameCanvas.height = newHeight;
-}
-
+// Causes the instructions modal to appear when "How To Play" link is clicked
 function overlay() {
-    el = document.getElementById("overlay");
+    var el = document.getElementById("overlay");
     el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+}
+
+// Causes the "Game Over" overlay to appear and stops all player and enemy movements
+function endGame() {
+    var el = document.getElementById("game-over");
+    el.style.visibility = "visible";
+    gameOver = true;
 }
