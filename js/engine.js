@@ -185,7 +185,7 @@ var Engine = (function(global) {
         lives = 3;
         level = 1;
         player.x = 200;
-        player.y = 380;
+        player.y = 400;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
