@@ -89,8 +89,9 @@ var Enemy = function(x, y, speed) {
 
 /* Here we add a method to the Enemy prototype  to update the
 *  enemy's position after each tick of the game engine.  The update() 
-*  method also sets a random speed and starting position for each 
-*  enemy object. 
+*  method also sets a random speed for each enemy object and
+*  returns the enemy to its starting point after each loop is
+*  completed. 
 */
 
 // Parameter: dt, a time delta between ticks
