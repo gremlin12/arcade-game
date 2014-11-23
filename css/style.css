@@ -116,7 +116,7 @@ a {
 /* Mobile Friendly */
 
 #mobile-controls {
-    bottom: -180px;
+    bottom: -160px;
     display: none;
     position: absolute;
     left: 20%;
@@ -152,6 +152,7 @@ a {
         top: 0; 
     }
     #mobile-controls {
+        display: -webkit-flex;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -169,7 +170,10 @@ a {
         top: 10%;
     }
     #mobileControls {
-        display: block;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         left: 0;
     }
 }

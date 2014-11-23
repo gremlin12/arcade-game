@@ -8,6 +8,7 @@
   <title>Bug Game</title>
   <link href='http://fonts.googleapis.com/css?family=Creepster' rel='stylesheet'>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/jquery.mobile.custom.min.js"></script>
 </head>
 <body>
   <!-- Game Area includes heading, Stats Panel and canvas -->
@@ -26,13 +27,14 @@
       <h2>GAME OVER</h2>
       <button id="play-again">Play Again</button> 
     </div>
-   <div id="mobile-controls">
-     <div>
-     <a href='#' onclick="mobileLeft()"><img src="images/left-arrow.png" alt="left-arrow"></a>
-     <a href='#' onclick="mobileUp()"><img src="images/up-arrow.png" alt="up-arrow"></a>
-     <a href='#' onclick="mobileDown()"><img src="images/down-arrow.png" alt="down-arrow"></a>
-     <a href='#' onclick="mobileRight()"><img src="images/right-arrow.png" alt="right-arrow"></a>      
-    </div> 
+    <!-- Player-movement controls for mobile devices only display on small screens-->
+    <div id="mobile-controls">
+      <div id="row">
+        <img src="images/left-arrow.png" id="left-arrow">
+        <img src="images/up-arrow.png" id="up-arrow">
+        <img src="images/down-arrow.png" id="down-arrow">
+        <img src="images/right-arrow.png" id="right-arrow">
+      </div>        
   </div>
  
   <script src="js/resources.js"></script>
