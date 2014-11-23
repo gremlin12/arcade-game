@@ -323,3 +323,27 @@ function endGame() {
     el.style.visibility = "visible";
     gameOver = true;
 }
+
+function mobileUp() {
+    if (player.y > 0) {
+        player.y -=80;
+    } 
+}
+
+function mobileDown() {
+    if (player.y < 350) {
+        player.y +=80;
+    }
+}
+
+function mobileLeft() {
+    if (player.x > 80) {
+        player.x -= 100;
+    }
+}
+
+function mobileRight() {
+    if (player.x < 350) {
+        player.x += 100;
+    }
+}

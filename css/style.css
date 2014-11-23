@@ -115,6 +115,18 @@ a {
 
 /* Mobile Friendly */
 
+#mobile-controls {
+    bottom: -60px;
+    display: none;
+    position: absolute;
+    left: 30%;
+}
+
+#mobile-controls img {
+    max-height: 50px;
+    max-width: 50px;
+}
+
 @media only screen and (max-width: 1024px) {
     #gameArea {
         position: absolute;
@@ -139,6 +151,10 @@ a {
         left: 0;
         top: 0; 
     }
+    #mobile-controls {
+        display: block;
+        left: 20%;
+    }
 }
 
 @media only screen and (max-width: 320px) {
@@ -149,5 +165,9 @@ a {
         position: absolute;
         left:10%;
         top: 10%;
+    }
+    #mobileControls {
+        display: block;
+        left: 0%;
     }
 }
