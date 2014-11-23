@@ -325,29 +325,17 @@ function endGame() {
 }
 
 function mobileUp() {
-    if (gameOver === false && player.y > 0) {
-        player.y -=80;
-    } 
     player.handleInput("up");
 }
 
 function mobileDown() {
-    if (gameOver === false && player.y < 350) {
-        player.y +=80;
-    }
     player.handleInput("down");
 }
 
 function mobileLeft() {
-    if (gameOver === false && player.x > 80) {
-        player.x -= 100;
-    }
     player.handleInput("left");
 }
 
 function mobileRight() {
-    if (gameOver === false && player.x < 350) {
-        player.x += 100;
-    }
     player.handleInput("right");
 }
