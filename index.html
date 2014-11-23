@@ -8,7 +8,6 @@
   <title>Bug Game</title>
   <link href='http://fonts.googleapis.com/css?family=Creepster' rel='stylesheet'>
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/jquery.mobile.custom.min.js"></script>
 </head>
 <body>
   <!-- Game Area includes heading, Stats Panel and canvas -->
@@ -30,11 +29,12 @@
     <!-- Player-movement controls for mobile devices only display on small screens-->
     <div id="mobile-controls">
       <div id="row">
-        <img src="images/left-arrow.png" id="left-arrow">
-        <img src="images/up-arrow.png" id="up-arrow">
-        <img src="images/down-arrow.png" id="down-arrow">
-        <img src="images/right-arrow.png" id="right-arrow">
-      </div>        
+        <img src="images/left-arrow.png" onclick="mobileLeft()" alt="left-arrow">
+        <img src="images/up-arrow.png" onclick="mobileUp()" alt="up-arrow">
+        <img src="images/down-arrow.png" onclick="mobileDown()" alt="down-arrow">
+        <img src="images/right-arrow.png" onclick="mobileRight()" alt="right-arrow">
+      </div>
+    </div>          
   </div>
  
   <script src="js/resources.js"></script>

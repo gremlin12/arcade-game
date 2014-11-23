@@ -324,19 +324,19 @@ function endGame() {
     gameOver = true;
 }
 
-// Allow touchable icons to work in place of keys on mobile devices.
-$("#up-arrow").on("tap", function() {
+// Allow clickable icons to work in place of keys on mobile devices.
+function mobileUp() {
     player.handleInput("up");
-});
+}
 
-$("#down-arrow").on("tap", function() {
+function mobileDown() {
     player.handleInput("down");
-});
+}
 
-$("#left-arrow").on("tap", function() {
+function mobileLeft() {
     player.handleInput("left");
-});
+}
 
-$("#right-arrow").on("tap", function() {
+function mobileRight() {
     player.handleInput("right");
-});
+}
