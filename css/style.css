@@ -116,15 +116,15 @@ a {
 /* Mobile Friendly */
 
 #mobile-controls {
-    bottom: -60px;
+    bottom: -180px;
     display: none;
     position: absolute;
-    left: 30%;
+    left: 20%;
 }
 
 #mobile-controls img {
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 80px;
+    max-width: 80px;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -153,7 +153,7 @@ a {
     }
     #mobile-controls {
         display: block;
-        left: 20%;
+        left: 10%;
     }
 }
 
@@ -168,6 +168,6 @@ a {
     }
     #mobileControls {
         display: block;
-        left: 0%;
+        left: 0;
     }
 }
