@@ -152,8 +152,10 @@ a {
         top: 0; 
     }
     #mobile-controls {
-        display: block;
-        left: 10%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        left: 0;
     }
 }
 
