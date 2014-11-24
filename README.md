@@ -39,4 +39,4 @@ http://www.html5rocks.com/en/tutorials/casestudies/gopherwoord-studios-resizing-
 Mark Pilgrim's online ebook "Dive Into HTML5" was an indispensible resource. Find his
 chapter on canvas drawing here: http://diveintohtml5.info/canvas.html
 
-And many thanks to the Udacity instructors for their patience and support!
+And many thanks to the Udacity community for their support.
