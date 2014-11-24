@@ -109,6 +109,7 @@ a {
 }
 
 .flex {
+    display: -webkit-flex;
     display: flex;
     flex-direction: row;
 }
@@ -125,6 +126,11 @@ a {
 #mobile-controls img {
     max-height: 80px;
     max-width: 80px;
+}
+
+#row img {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 @media only screen and (max-width: 1024px) {
