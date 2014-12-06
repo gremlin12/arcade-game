@@ -8,9 +8,14 @@ have overrun the city. Only You Can Save Us!
 
 To play the game, follow these steps:
 
-1. Open the index.html file in a browser
-2. Click on the "How to Play" link for instructions
-3. Have fun!
+1. Download the zip file and extract its contents.
+2. Open the index.html file in a browser.
+3. Click on the "How to Play" link for instructions.
+4. Use the arrow keys on your keyboard to move your avatar.
+5. Cross the road as many times as you can without bumping into any bugs.
+6. Collect as many tokens on the way as you can.
+7. Hearts give you an extra life. Keys reduce the number of bugs.
+8. The game ends when you run out of lives. 
 
 
 This game was created as a project for Udacity's Frontend Web-Developer Nanodegree.
@@ -35,4 +40,4 @@ http://www.html5rocks.com/en/tutorials/casestudies/gopherwoord-studios-resizing-
 Mark Pilgrim's online ebook "Dive Into HTML5" was an indispensible resource. Find his
 chapter on canvas drawing here: http://diveintohtml5.info/canvas.html
 
-And many thanks to the Udacity instructors for their patience and support!
+And many thanks to the Udacity community for their support.
