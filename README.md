@@ -1,4 +1,4 @@
-frontend-nanodegree-arcade-game
+arcade-game
 ===============================
 
 REVENGE OF THE MUTANT LADYBUGS
